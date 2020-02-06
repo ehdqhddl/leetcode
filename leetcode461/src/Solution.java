@@ -1,34 +1,53 @@
 public class Solution {
     public static void main(String args[]){
-        int x = 4, y = 2;
+        int x = 1, y = 4;
 
-        String x_str = Integer.toString(x,2);
-        String y_str = Integer.toString(y,2);
+        String x_str = Integer.toBinaryString(x);
+        String y_str = Integer.toBinaryString(y);
 
-        int max = Integer.max(x_str.length(), y_str.length());
-        int res = 1;
-        String formats = "%0" + Integer.toString(max) + "d";
+        int res = 0;
 
-        x_str = String.format(formats,Integer.parseInt(Integer.toBinaryString(x).toString()));
-        y_str = String.format(formats,Integer.parseInt(Integer.toBinaryString(y).toString()));
-
-        int[] x_bits = new int[max];
-        int[] y_bits = new int[max];
-
-        for(int i = 0;i<x_str.length();i++){
-            x_bits[i] = x_str.charAt(i)-48;
+        if(x_str.length() > y_str.length()){
+            int len = x_str.length() - y_str.length();
+            for(int i = 0; i<len;i++){
+                y_str = "0"+y_str;
+            }
+            for(int i = 0;i<x_str.length();i++){
+                if(x_str.charAt(i) != y_str.charAt(i))
+                    res ++;
+            }
         }
-        for(int i = 0;i<y_str.length();i++){
-            y_bits[i] = y_str.charAt(i)-48;
-        }
-
-        for(int i = 0 ;i<max;i++){
-            if(x_bits[i]!=y_bits[i] && i!=0){
-                res = i;
-                break;
+        else {
+            int len = y_str.length() - x_str.length();
+            for(int i = 0; i<len;i++){
+                x_str = "0" + x_str;
+            }
+            for(int i = 0;i<y_str.length();i++){
+                if(x_str.charAt(i) != y_str.charAt(i))
+                    res ++;
             }
         }
 
         System.out.println(res);
     }
 }
+
+
+/*
+0ms 솔루션
+class Solution {
+    public int hammingDistance(int x, int y) {
+
+        int z=x^y;
+        int count=0;
+
+        while(z>0)
+        {
+            count+= z&1;
+            z>>=1;
+        }
+
+        return count;
+    }
+}
+ */
